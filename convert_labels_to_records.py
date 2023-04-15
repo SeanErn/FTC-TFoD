@@ -137,7 +137,7 @@ def create_tf_example(labels, txt_full_path):
 def write_record_from_list(id, labels, data, out_path):
     examples_count = collections.Counter()
     negative_count = 0
-    with tf.python_io.TFRecordWriter(out_path) as writer:
+    with tf.io.TFRecordWriter(out_path) as writer:
         for filename in data:
             print("[%s] Writing record for" % id, filename)
             example, count, is_negative = create_tf_example(labels, filename)
