@@ -21,7 +21,7 @@ while true; do
     'Updated by: FRC Team 5152'
     gum style --align left --width 50  --foreground "#FFFFFF" \
     '************************************'
-    choice=$(gum choose "Install" "Manual Label" "Semi Automatic Label" "Rename Labels" "Convert Labels" "Train Model" "Export Model" "Test Model" "Exit")
+    choice=$(gum choose "Install" "Manual Label" "Semi Automatic Label" "Rename Labels" "Convert Labels" "Train Model" "Export Model" "Test Model" "Advanced" "Exit")
     case $choice in
         "Install")
             if ! command -v python3 &> /dev/null
@@ -31,6 +31,7 @@ while true; do
             else
                 # run your installation script here
                 python install.py
+                read -p "DONE! Press enter to continue..."
             fi
             ;;
         "Manual Label")
@@ -58,7 +59,7 @@ Mouse:         Draw bounding boxes"
                 python labeler.py $filename -f $frames
             ;;
         "Semi Automatic Label")
-            choiceSemi=$(gum choose "Find Bounding (FIRST)" "Track Bounding (SECOND)")
+            choiceSemi=$(gum choose "Find Bounding (FIRST)" "Track Bounding (SECOND)" "Exit")
             case $choiceSemi in
                 "Find Bounding (FIRST)")
                     filename=$(gum input --placeholder "Enter the path of the video to label")
@@ -80,6 +81,10 @@ Normal Mode Keybinds:
 
 q:        Quit the tracker"
                         python tracking.py $filename
+                    ;;
+                "Exit")
+                    echo "Exiting..."
+                    exit 0
                     ;;
                 *)
                     echo "Invalid option. Please try again."
@@ -107,7 +112,7 @@ q:        Quit the tracker"
             # run your script for "Train Model" here
             python config_pipeline.py
             chmod +x ./scripts/train.sh
-            ./scripts/train.sh
+            ./scripts/train.sh & tensorboard --logdir=models/ssd_mobilenet_v2_quantized/saved_model && fg
             ;;
         "Export Model")
             # run your script for "Train Model" here
@@ -118,6 +123,38 @@ q:        Quit the tracker"
             # run your script for "Test Model" here
             echo "Test Model script not implemented."
             read -p "Press enter to continue..."
+            ;;
+        "Advanced")
+            # run your script for "Advanced" here
+            choiceAdvanced=$(gum choose "Purge models" "Purge dataset" "Exit")
+            case $choiceAdvanced in
+                "Purge models")
+                    confirm=$(gum input --placeholder "Type PURGE to confirm purging of models")
+                    if [ "$confirm" == "PURGE" ]; then
+                        rm -rf models/ssd_mobilenet_v2_quantized/saved_model
+                        read -p "Purged models! Press enter to continue..."
+                    else
+                        read -p "Purge cancelled. Press enter to continue..."
+                    fi
+                    ;;
+                "Purge dataset")
+                    confirm=$(gum input --placeholder "Type PURGE to confirm purging of dataset")
+                    if [ "$confirm" == "PURGE" ]; then
+                        rm -rf train_data/!(.gitkeep | *.mp4)
+                        read -p "Purged dataset! Press enter to continue..."
+                    else
+                        read -p "Purge cancelled. Press enter to continue..."
+                    fi
+                    ;;
+                "Exit")
+                    echo "Exiting..."
+                    exit 0
+                    ;;
+                *)
+                    echo "Invalid option. Please try again."
+                    read -p "Press enter to continue..."
+                    ;;
+            esac
             ;;
         "Exit")
             echo "Exiting..."
