@@ -1,12 +1,12 @@
-# FTC-TFoD
+## FTC TFoD Easy
 
-------
+### Credits:
+Credits to [ssysm](github.com/ssysm) for creating some of the original framework
 
-## FTC-TFoD is going into archive and no longer maintained(for now). Please refer to other resources. Thanks everyone for the support.
+***
+### Preface:
+This framework is designed so teams are able to train fully fledged tensorflow models on local machines instead of using FIRST's ftcml in the cloud. This is only helpful if a member has a powerful enough pc with a GPU. Otherwise I recommend that you use ftcml instead. This program has been updated to make the user experience much better. With that said, it still will require atleast some technical know-how as problems will arise.
 
-
-I am no longer involved in FTC/FRC or any FIRST related competition anymore and have little to no time maintaining this. 
-If anyone would like to fork it and move it forward that will be much appreciated.
 ------
 
 
