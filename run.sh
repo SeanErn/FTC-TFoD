@@ -21,7 +21,7 @@ while true; do
     'Updated by: FRC Team 5152'
     gum style --align left --width 50  --foreground "#FFFFFF" \
     '************************************'
-    choice=$(gum choose "Install" "Manual Label" "Semi Automatic Label" "Rename Labels" "Convert Labels" "Train Model" "Test Model" "Exit")
+    choice=$(gum choose "Install" "Manual Label" "Semi Automatic Label" "Rename Labels" "Convert Labels" "Train Model" "Export Model" "Test Model" "Exit")
     case $choice in
         "Install")
             if ! command -v python3 &> /dev/null
@@ -96,7 +96,7 @@ q:        Quit the tracker"
             read -p "DONE! Press enter to continue..."
             ;;
         "Convert Labels")
-            dir=$(gum input --placeholder "Enter the path of the directory containing the training data")
+            dir=$(gum input --placeholder "Enter the path of the directory containing the training data (Default: train_data)")
             number=$(gum input --placeholder "Enter the number of files to split data into (used if you want to train on multiple machines)")
             split=$(gum input --placeholder "Percentage split of training to validation data (0.0-1.0)")
             echo "Converting labels in directory $dir"
@@ -105,8 +105,14 @@ q:        Quit the tracker"
             ;;
         "Train Model")
             # run your script for "Train Model" here
-            echo "Train Model script not implemented."
-            read -p "Press enter to continue..."
+            python config_pipeline.py
+            chmod +x ./scripts/train.sh
+            ./scripts/train.sh
+            ;;
+        "Export Model")
+            # run your script for "Train Model" here
+            chmod +x ./scripts/export_tflite.sh
+            ./scripts/export_tflite.sh
             ;;
         "Test Model")
             # run your script for "Test Model" here

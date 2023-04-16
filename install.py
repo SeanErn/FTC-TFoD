@@ -10,24 +10,24 @@ print(Fore.GREEN+'[SUCCESS] Colorama installed successfully!')
 # Check if user has git apt package installed
 if not pathlib.Path('/usr/bin/git').exists():
     print('Installing git...')
-    os.system('apt-get update -y')
-    os.system('apt-get install git -y')
+    os.system('sudo apt-get update -y')
+    os.system('sudo apt-get install git -y')
 else:
     print(Fore.YELLOW+'[INFO] Git already installed, skipping...')
 
 # Check if user has protobuf apt package installed
 if not pathlib.Path('/usr/bin/protoc').exists():
     print(Fore.CYAN+'[INSTALL] Installing protobuf...')
-    os.system('apt-get update -y')
-    os.system('apt-get install protobuf-compiler -y')
+    os.system('sudo apt-get update -y')
+    os.system('sudo apt-get install protobuf-compiler -y')
 else:
     print(Fore.YELLOW+'[INFO] Protobuf already installed, skipping...')
 
 # Check if user has wget apt package installed
 if not pathlib.Path('/usr/bin/wget').exists():
     print(Fore.CYAN+'[INSTALL] Installing wget...')
-    os.system('apt-get update -y')
-    os.system('apt-get install wget -y')
+    os.system('sudo apt-get update -y')
+    os.system('sudo apt-get install wget -y')
 else:
     print(Fore.YELLOW+'[INFO] Wget already installed, skipping...')
 
