@@ -101,7 +101,7 @@ q:        Quit the tracker"
             read -p "DONE! Press enter to continue..."
             ;;
         "Convert Labels")
-            dir=$(gum input --placeholder "Enter the path of the directory containing the training data (Default: train_data)")
+            dir=$(gum input --placeholder "Enter the path of the directory containing the training data (Ex. train_data)")
             number=$(gum input --placeholder "Enter the number of files to split data into (used if you want to train on multiple machines)")
             split=$(gum input --placeholder "Percentage split of training to validation data (0.0-1.0)")
             echo "Converting labels in directory $dir"
@@ -112,8 +112,8 @@ q:        Quit the tracker"
             # run your script for "Train Model" here
             python config_pipeline.py
             chmod +x ./scripts/train.sh
-            ./scripts/train.sh & tensorboard --logdir=models/ssd_mobilenet_v2_quantized/saved_model && fg
             xdg-open http://localhost:6006
+            ./scripts/train.sh & x-terminal-emulator -e tensorboard --logdir=models/ssd_mobilenet_v2_quantized/saved_model && fg
             ;;
         "Export Model")
             # run your script for "Train Model" here
