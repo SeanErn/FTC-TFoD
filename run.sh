@@ -113,6 +113,7 @@ q:        Quit the tracker"
             python config_pipeline.py
             chmod +x ./scripts/train.sh
             ./scripts/train.sh & tensorboard --logdir=models/ssd_mobilenet_v2_quantized/saved_model && fg
+            xdg-open http://localhost:6006
             ;;
         "Export Model")
             # run your script for "Train Model" here
@@ -140,7 +141,7 @@ q:        Quit the tracker"
                 "Purge dataset")
                     confirm=$(gum input --placeholder "Type PURGE to confirm purging of dataset")
                     if [ "$confirm" == "PURGE" ]; then
-                        rm -rf train_data/!(.gitkeep | *.mp4)
+                        rm -rf train_data/*
                         read -p "Purged dataset! Press enter to continue..."
                     else
                         read -p "Purge cancelled. Press enter to continue..."
