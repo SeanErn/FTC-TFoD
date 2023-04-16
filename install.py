@@ -10,6 +10,8 @@ if not pathlib.Path(str(os.path.expanduser('~'))+'/miniconda3').exists():
     os.system('./Miniconda3-latest-Linux-x86_64.sh')
     os.system('rm Miniconda3-latest-Linux-x86_64.sh')
     os.system('source ~/.bashrc')
+    os.system('conda init')
+    os.system('source ~/.bashrc')
 else:
     print('[INFO] Miniconda3 already installed, skipping...')
     
@@ -17,6 +19,7 @@ else:
 if not pathlib.Path(str(os.path.expanduser('~'))+'/miniconda3/envs/tfodforftc').exists():
     print('Creating new conda environment...')
     os.system('conda create -n tfodforftc python=3.7 -y')
+
     os.system('conda activate tfodforftc')
 else:
     print('Conda environment already exists, activating...')
