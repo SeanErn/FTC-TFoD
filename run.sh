@@ -13,6 +13,24 @@ fi
 export GUM_CHOOSE_CURSOR_FOREGROUND="#FFA500"
 export GUM_CHOOSE_PROMPT_FOREGROUND="#FFA500"
 
+# get the name of the active Conda environment
+env_name=$(conda info --envs | grep '*' | awk '{print $NF}')
+
+# remove the path information and trailing slashes from the environment name, if it exists
+if [[ ! -z "$env_name" ]]; then
+    env_name=$(basename "$env_name" | sed 's:/$::')
+fi
+
+# check if the environment name is tfodforftc
+if [[ "$env_name" != "tfodforftc" ]]; then
+    echo "Active environment is not tfodforftc."
+    isEnvCorrect=false
+else
+    echo "Active environment is correct."
+    isEnvCorrect=true
+fi
+
+
 while true; do
     clear
     gum style --align left --width 50 --foreground "#FFA500" \
@@ -35,6 +53,11 @@ while true; do
             fi
             ;;
         "Manual Label")
+        if [ "$isEnvCorrect" = false ]; then
+            echo "Please activate the tfodforftc environment and try again."
+            echo "To activate the environment, run install again."
+            read -p "Press enter to continue..."
+        else
             filename=$(gum input --placeholder "Enter the path of the video to label")
             frames=$(gum input --placeholder "Enter the number of frames to skip between each label")
             echo "Manual labeling with filename $filename and frames=$frames"
@@ -57,8 +80,14 @@ x:             Clear the most recent bounding box
 r:             Load the last set of bounding boxes
 Mouse:         Draw bounding boxes"
                 python labeler.py $filename -f $frames
+            fi
             ;;
         "Semi Automatic Label")
+        if [ "$isEnvCorrect" = false ]; then
+            echo "Please activate the tfodforftc environment and try again."
+            echo "To activate the environment, run install again."
+            read -p "Press enter to continue..."
+        else
             choiceSemi=$(gum choose "Find Bounding (FIRST)" "Track Bounding (SECOND)" "Exit")
             case $choiceSemi in
                 "Find Bounding (FIRST)")
@@ -91,37 +120,68 @@ q:        Quit the tracker"
                     read -p "Press enter to continue..."
                     ;;
             esac
+        fi
             ;;
         "Rename Labels")
+        if [ "$isEnvCorrect" = false ]; then
+            echo "Please activate the tfodforftc environment and try again."
+            echo "To activate the environment, run install again."
+            read -p "Press enter to continue..."
+        else
             dir=$(gum input --placeholder "Enter the path of the directory containing the label files")
             old_label=$(gum input --placeholder "Enter the old label letter")
             new_label=$(gum input --placeholder "Enter the new label string")
             echo "Renaming labels in directory $dir from $old_label to $new_label"
             python rename_labels.py $dir $old_label $new_label
             read -p "DONE! Press enter to continue..."
+        fi
             ;;
         "Convert Labels")
+        if [ "$isEnvCorrect" = false ]; then
+            echo "Please activate the tfodforftc environment and try again."
+            echo "To activate the environment, run install again."
+            read -p "Press enter to continue..."
+        else
             dir=$(gum input --placeholder "Enter the path of the directory containing the training data (Ex. train_data)")
             number=$(gum input --placeholder "Enter the number of files to split data into (used if you want to train on multiple machines)")
             split=$(gum input --placeholder "Percentage split of training to validation data (0.0-1.0)")
             echo "Converting labels in directory $dir"
             python convert_labels_to_records.py $dir -n $number -s $split -e
             read -p "DONE! Press enter to continue..."
+        fi
             ;;
         "Train Model")
+        if [ "$isEnvCorrect" = false ]; then
+            echo "Please activate the tfodforftc environment and try again."
+            echo "To activate the environment, run install again."
+            read -p "Press enter to continue..."
+        else
             # run your script for "Train Model" here
             python config_pipeline.py
             chmod +x ./scripts/train.sh
             xdg-open http://localhost:6006
             ./scripts/train.sh & x-terminal-emulator -e tensorboard --logdir=models/ssd_mobilenet_v2_quantized/saved_model && fg
+            read -p "DONE! Press enter to continue..."
+        fi
             ;;
         "Export Model")
+        if [ "$isEnvCorrect" = false ]; then
+            echo "Please activate the tfodforftc environment and try again."
+            echo "To activate the environment, run install again."
+            read -p "Press enter to continue..."
+        else
             # run your script for "Train Model" here
             chmod +x ./scripts/quick_export.sh
             ./scripts/quick_export.sh
             read -p "DONE! Press enter to continue..."
+        fi
             ;;
         "Test Model")
+        if [ "$isEnvCorrect" = false ]; then
+            echo "Please activate the tfodforftc environment and try again."
+            echo "To activate the environment, run install again."
+            read -p "Press enter to continue..."
+        else
             # run your script for "Test Model" here
             dir=$(gum input --placeholder "Enter the path to the video for validation (Ex. validation_data/2023.mp4)")
             echo "Testing model on video $dir"
@@ -131,6 +191,7 @@ Normal Mode Keybinds:
 q:        Quit the inference"
             python inference_tflite.py --modeldir models/ssd_mobilenet_v2_quantized/tflite --video $dir
             read -p "DONE! Press enter to continue..."
+        fi
             ;;
         "Advanced")
             # run your script for "Advanced" here

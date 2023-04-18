@@ -90,6 +90,7 @@ Things to remember:
 ![LabelSemiTrackBoxesConfirm](.readmePics/LabelSemiTrackBoxesConfirm.png "LabelSemiTrackBoxesConfirm")
 11. Press `y` if the bounding box is correct, or `n` if it is not
 12. The program will then track the object in the video and label each frame. If the bounding box ever looks incorrect, press the `spacebar` to pause the video. Use the dots to adjust the bounding box. Then press `spacebar` again to continue the video
+![LabelSemiTrackBoxesEdit](.readmePics/LabelSemiTrackBoxesEdit.png "LabelSemiTrackBoxesEdit")
 13. Press `q` to quit the program manually, or wait for the video to finish and it will quit automatically
 14. Repeat steps 1-13 for each video you want to label
 
