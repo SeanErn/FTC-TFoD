@@ -1,7 +1,7 @@
 ## FTC TFoD Easy
 
 ### Credits:
-Credits to [ssysm](github.com/ssysm) for creating some of the original framework
+Credits to [ssysm](github.com/ssysm) for creating the original framework
 
 ***
 ### Preface:
