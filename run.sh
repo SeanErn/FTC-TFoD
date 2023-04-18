@@ -105,7 +105,7 @@ q:        Quit the tracker"
             number=$(gum input --placeholder "Enter the number of files to split data into (used if you want to train on multiple machines)")
             split=$(gum input --placeholder "Percentage split of training to validation data (0.0-1.0)")
             echo "Converting labels in directory $dir"
-            python convert_labels_to_records.py $dir -n $number -s $split
+            python convert_labels_to_records.py $dir -n $number -s $split -e
             read -p "DONE! Press enter to continue..."
             ;;
         "Train Model")
@@ -117,13 +117,20 @@ q:        Quit the tracker"
             ;;
         "Export Model")
             # run your script for "Train Model" here
-            chmod +x ./scripts/export_tflite.sh
-            ./scripts/export_tflite.sh
+            chmod +x ./scripts/quick_export.sh
+            ./scripts/quick_export.sh
+            read -p "DONE! Press enter to continue..."
             ;;
         "Test Model")
             # run your script for "Test Model" here
-            echo "Test Model script not implemented."
-            read -p "Press enter to continue..."
+            dir=$(gum input --placeholder "Enter the path to the video for validation (Ex. validation_data/2023.mp4)")
+            echo "Testing model on video $dir"
+            echo "
+Normal Mode Keybinds:
+
+q:        Quit the inference"
+            python inference_tflite.py --modeldir models/ssd_mobilenet_v2_quantized/tflite --video $dir
+            read -p "DONE! Press enter to continue..."
             ;;
         "Advanced")
             # run your script for "Advanced" here
