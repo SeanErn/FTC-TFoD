@@ -122,7 +122,7 @@ Things to remember:
 3. To view the training progress, open up a web browser and go to `http://localhost:6006/`
 ![Tensorboard](.readmePics/Tensorboard.png "Tensorboard")
 4. Scroll down and expand the `loss` section
-![Loss](.readmePics/Loss.png "Loss")
+![Loss](.readmePics/Loss.png "Loss")<br>
 The lower the loss, the better the model is performing. If the loss is not decreasing, you may need to add more training data or train for longer
 
 
