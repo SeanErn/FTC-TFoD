@@ -1,6 +1,9 @@
 import os
 import pathlib
 import importlib.util
+import subprocess
+
+
 
 # Install Miniconda3 if it doesn't already exist
 if not pathlib.Path(str(os.path.expanduser('~'))+'/miniconda3').exists():
@@ -9,9 +12,6 @@ if not pathlib.Path(str(os.path.expanduser('~'))+'/miniconda3').exists():
     os.system('chmod +x Miniconda3-latest-Linux-x86_64.sh')
     os.system('./Miniconda3-latest-Linux-x86_64.sh')
     os.system('rm Miniconda3-latest-Linux-x86_64.sh')
-    os.system('source ~/.bashrc')
-    os.system('conda init')
-    os.system('source ~/.bashrc')
 else:
     print('[INFO] Miniconda3 already installed, skipping...')
     
@@ -19,12 +19,37 @@ else:
 if not pathlib.Path(str(os.path.expanduser('~'))+'/miniconda3/envs/tfodforftc').exists():
     print('Creating new conda environment...')
     os.system('conda create -n tfodforftc python=3.7 -y')
-
-    os.system('conda activate tfodforftc')
 else:
-    print('Conda environment already exists, activating...')
-    os.system('conda activate tfodforftc')
+    print('Conda environment already exists')
+    
+# Require user to activate conda environment before continuing
+result = subprocess.run(['conda', 'info', '--envs'], stdout=subprocess.PIPE)
+output = result.stdout.decode('utf-8')
+env_lines = output.split('\n')
+env_name = None
+for line in env_lines:
+    if '*' in line:
+        env_name = line.split()[-1]
+        break
 
+# remove the path information and trailing slashes from the environment name, if it exists
+if env_name is not None:
+    env_name = os.path.basename(env_name).rstrip('/')
+
+# print the name of the active environment, if it exists
+if env_name is not None:
+    print('[ENV] Current environment: ', env_name)
+    if env_name != 'tfodforftc':
+        print('Please activate the tfodforftc environment before continuing')
+        print('To activate the environment, run the following command:')
+        print('conda activate tfodforftc')
+        exit()
+else:
+    print("No active environment found.")
+    print('Please initialize conda before continuing')
+    print('To initialize conda, run the following command:')
+    print('conda init bash')
+    
 
 # Install colorama
 print('Installing colorama...')
