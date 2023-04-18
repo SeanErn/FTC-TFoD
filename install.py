@@ -40,15 +40,17 @@ if env_name is not None:
 if env_name is not None:
     print('[ENV] Current environment: ', env_name)
     if env_name != 'tfodforftc':
-        print('Please activate the tfodforftc environment before continuing')
-        print('To activate the environment, run the following command:')
-        print('conda activate tfodforftc')
+        print('\033[0;31mPlease activate the tfodforftc environment before continuing')
+        print('To activate the environment, exit FTC-TFoD-Easy and run the following command:\033[00m')
+        print('"conda init bash"')
+        print('\033[0;31mThen restart your shell')
+        print('Finally, run \033[00m"conda activate tfodforftc" \033[0;31mand run the install script again.\033[00m')
+        print('Exiting...')
         exit()
 else:
-    print("No active environment found.")
-    print('Please initialize conda before continuing')
-    print('To initialize conda, run the following command:')
-    print('conda init bash')
+    print("\033[0;31mNo active environment found.")
+    print('Unkown Error with CONDA\033[00m')
+    exit()
     
 
 # Install colorama
@@ -118,6 +120,13 @@ if not pathlib.Path(str(os.path.expanduser('~'))+'/.bashrc').read_text().find('e
     os.system('''echo 'export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$CONDA_PREFIX/lib/:$CUDNN_PATH/lib' >> $CONDA_PREFIX/etc/conda/activate.d/env_vars.sh''')
 else:
     print(Fore.YELLOW+'[INFO] CUDA paths already exported, skipping...')
+
+# If the directory modelsLib allready exists, delete it
+if pathlib.Path('modelsLib').exists():
+    print(Fore.CYAN+'[INSTALL] Deleting old modelsLib directory...')
+    os.system('rm -r modelsLib')
+else:
+    print(Fore.YELLOW+'[INFO] modelsLib directory already deleted, skipping...')
 
 # Clone the tensorflow models repository if it doesn't already exist
 if "modelsLib" in pathlib.Path.cwd().parts:
