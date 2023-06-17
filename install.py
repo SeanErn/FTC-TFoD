@@ -49,7 +49,13 @@ if env_name is not None:
         exit()
 else:
     print("\033[0;31mNo active environment found.")
-    print('Unkown Error with CONDA\033[00m')
+    print('Unkown Error with CONDA')
+    print('Did you activate CONDA?')
+    print('To activate the environment, exit FTC-TFoD-Easy and run the following command:\033[00m')
+    print('"conda init bash"')
+    print('\033[0;31mThen restart your shell')
+    print('Finally, run \033[00m"conda activate tfodforftc" \033[0;31mand run the install script again.\033[00m')
+    print('Exiting...\033[00m')
     exit()
     
 
