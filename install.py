@@ -10,7 +10,7 @@ if not pathlib.Path(str(os.path.expanduser('~'))+'/miniconda3').exists():
     print('[INSTALL] Installing miniconda3...')
     os.system('wget https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh')
     os.system('chmod +x Miniconda3-latest-Linux-x86_64.sh')
-    os.system('./Miniconda3-latest-Linux-x86_64.sh')
+    os.system('./Miniconda3-latest-Linux-x86_64.sh -b')
     os.system('rm Miniconda3-latest-Linux-x86_64.sh')
 else:
     print('[INFO] Miniconda3 already installed, skipping...')
