@@ -8,6 +8,8 @@ TFLITE_MODEL_DIR=${NETWORK_DIR}/tflite
 TFOD_API="modelsLib/research/object_detection"
 INPUT_TYPE=image_tensor
 MODEL_PREFIX=model.ckpt-$(gum input --placeholder "Enter the last training step checkpoint (Ex. 20000 if the checkpoint is model.ckpt-20000)")
+HEIGHT=$(gum input --placeholder "Enter the height to accept as input data (Ex. 720)")
+WIDTH=$(gum input --placeholder "Enter the width to accept as input data (Ex. 1280)")
 
 # First run export_inference_graph.sh
 if [ -d "${INFERENCE_GRAPH_DIR}" ]; then
@@ -36,7 +38,7 @@ python ${TFOD_API}/export_tflite_ssd_graph.py \
 tflite_convert \
     --graph_def_file=${TFLITE_MODEL_DIR}/tflite_graph.pb \
     --output_file=${TFLITE_MODEL_DIR}/detect.tflite \
-    --input_shapes=1,300,300,3 \
+    --input_shapes=1,${HEIGHT},${WIDTH},3 \
     --input_arrays=normalized_input_image_tensor \
     --output_arrays="TFLite_Detection_PostProcess","TFLite_Detection_PostProcess:1","TFLite_Detection_PostProcess:2","TFLite_Detection_PostProcess:3" \
     --inference_type=QUANTIZED_UINT8 \
@@ -48,3 +50,5 @@ tflite_convert \
 cp train_data/label.pbtxt ${TFLITE_MODEL_DIR}
 
 echo "DONE! Check ${TFLITE_MODEL_DIR} for the tflite model."
+
+# --input_shapes=1,360,480,3 \
