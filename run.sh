@@ -156,8 +156,11 @@ q:        Quit the tracker"
             echo "To activate the environment, run install again."
             read -p "Press enter to continue..."
         else
+            # Get numbers for vh and width
+            height=$(gum input --placeholder "Enter the height to accept as input data (Ex. 720)")
+            width=$(gum input --placeholder "Enter the width to accept as input data (Ex. 1280)")
             # run your script for "Train Model" here
-            python config_pipeline.py
+            python config_pipeline.py -v $height -w $width
             chmod +x ./scripts/train.sh
             xdg-open http://localhost:6006
             ./scripts/train.sh & x-terminal-emulator -e tensorboard --logdir=models/ssd_mobilenet_v2_quantized/saved_model && fg

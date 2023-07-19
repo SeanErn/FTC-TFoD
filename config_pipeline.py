@@ -1,4 +1,25 @@
 import os
+import argparse
+
+# Create an argument parser
+parser = argparse.ArgumentParser()
+
+# Add the height argument
+parser.add_argument('-v', '--vertical', type=int, help='Specify the vertical height')
+
+# Add the width argument
+parser.add_argument('-w', '--width', type=int, help='Specify the width')
+
+# Parse the command line arguments
+args = parser.parse_args()
+
+# Extract the height and width values
+vertical = args.vertical
+width = args.width
+
+# Use the height and width variables in your code
+print("Vertical Height:", vertical)
+print("Width:", width)
 
 # Find file
 def find_file(filename, search_path='.'):
@@ -55,3 +76,5 @@ update_file(fine_tune_checkpoint_path + '/pipeline.config', 'NUM_CLASSES', str(n
 update_file(fine_tune_checkpoint_path + '/pipeline.config', 'PATH_TO_CHECKPOINT', str(fine_tune_checkpoint_path))
 update_file(fine_tune_checkpoint_path + '/pipeline.config', 'PATH_TO_TFRECORDS', str(tfrecordfiles_path))
 update_file(fine_tune_checkpoint_path + '/pipeline.config', 'PATH_TO_LABELFILES', str(label_file_path))
+update_file(fine_tune_checkpoint_path + '/pipeline.config', 'HEIGHT_RESIZE', str(vertical))
+update_file(fine_tune_checkpoint_path + '/pipeline.config', 'WIDTH_RESIZE', str(width))
