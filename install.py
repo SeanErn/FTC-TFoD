@@ -164,7 +164,7 @@ print(Fore.GREEN+'[SUCCESS] Object detection API installed successfully!')
 # os.system('python object_detection/builders/model_builder_tf2_test.py')
 
 print(Fore.YELLOW+'[INFO] Installing Extra Packages...')
-os.system('pip install opencv-contrib-python')
+os.system('pip install opencv-contrib-python==4.5.5.62')
 os.system('pip install numpy')
 os.system('pip install protobuf==3.20.*') # Downgrade protobuf to 3.20.* to avoid errors
 os.system('pip install keras==2.2.5') # Force lower version of keras to avoid errors

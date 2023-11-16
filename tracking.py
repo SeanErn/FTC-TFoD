@@ -72,7 +72,7 @@ parser.add_argument("-t", "--tracker", type=int, default=2, required=False,
 parser.add_argument("-y", "--yes", action="store_true", default=False,
                     help="Skip initial bounding box validation")
 parser.add_argument("-f", "--frames", type=int,
-                    help="Number of steps between each frame to save", default=10)
+                    help="Number of steps between each frame to save", default=2)
 parser.add_argument("-x", "--experiment", action="store_true", default=False,
                     help="Don't write out any files")
 args = parser.parse_args()
